@@ -1,0 +1,45 @@
+{% extends "ohb/base.html" %}
+{% block content %}
+
+
+<div class="table-responsive">
+  <table class="table table-bordered table-sm">
+        <thead>
+
+          
+          
+         
+        </thead>
+      
+        
+      <tbody>
+          {% for a in i %}
+         
+            <tr>
+            <td>{{a.item_name}}</td>
+            <td>{{a.item_price}}円</td>
+            </tr>    
+
+      </tbody> {% endfor %}
+      </table></div>
+      <a href="{% url 'ohb:create' %}">登録ページ</a>
+
+      <table class="table table-striped table-bordered table-hover">
+            <tr>
+                <td>index</td>
+                {% for a in df_context %}
+                    <td>{{ a }}</td>
+                {% endfor %}
+            </tr>
+            {% for index, values in df_context.iterrows %}
+                <tr>
+                    <th>{{ index }}</th>
+                    {% for value in values %}
+                        <td>{{ value }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+
+
+      {% endblock %}

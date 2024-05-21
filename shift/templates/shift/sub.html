@@ -1,0 +1,27 @@
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" >
+  <a class="navbar-link" href="{% url 'shift:shift_list' %}">全店</a>
+
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+     
+      {% for s in bshop %}
+      <li class="nav-item">
+        <a class="nav-item nav-link" href="{% url 'shift:shopshift_list' s.shop %}">{{s.get_shop_display}}店</a>
+      </li>
+      {% endfor %}
+
+        </div></li>
+        </ul>
+        <span class="nav-item">
+          <a class="nav-item nav-link" href="{% url 'shift:shopshift_list' shopnum week_previous.year week_previous.month week_previous.day %}">前<<<</a>
+        </span>
+        <span class="navbar-text">
+          <small>{{ week_first}}-{{ week_last }}</small>
+        </span>
+        <span class="nav-item">
+          <a class="nav-item nav-link"href="{% url 'shift:shopshift_list' shopnum week_next.year week_next.month week_next.day %}">>>>次</a>
+        </span>
+    
+  </div>
+</nav>

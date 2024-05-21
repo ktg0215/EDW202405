@@ -1,0 +1,54 @@
+{% extends "ohb/base.html" %}
+{% block content %}
+
+
+<div class="table-responsive">
+  <table class="table table-bordered table-sm">
+
+        <thead>
+            <td><a  href="{% url 'ohb:week_list' year_ago month_ago %}">前<<<</a>　　　　　{{year}}年{{month}}月　　　　　<a href="{% url 'ohb:week_list' year_next month_next  %}">>>>次</a></td>
+          
+         
+        </thead>
+
+
+      <table class="table table-striped table-bordered table-hover">
+            <tr>
+                <td>index</td>
+                {% for a,b in date %}
+                {% if b == "日" %}
+                
+                <td>{{ a.day }}日<span style="color: #F00;"> <small>({{b}})</small></span></td>
+                
+                {% elif b == "土" %}
+                
+                <td>{{ a.day }}日<span style="color:#0000FF"> <small>({{b}})</small></span></td>
+                
+                {% else %}
+                <td> {{ a.day }}日 <small>({{b}})</small></td>
+                
+                       {% endif %} {% endfor %}
+                                
+            </tr>
+            {% for index, values in df_context.iterrows %}
+                <tr>
+                    {% if index.id == None %}
+                    {% with new_id=100 %}
+                    <th><a href="{% url 'ohb:graph' new_id year month day %}">
+                      {{ index }} 　　　　　　　　　　　　　　
+                    </a></th>
+                    {%endwith%}
+                    {%else%}
+                    <th><a href="{% url 'ohb:graph' index.id year month day %}">
+                    {{ index }} 　　　　　　　　　　　　　　  </a> </th>
+                    {%endif%}
+                    {% for value in values %}
+                        <td>{{ value }}</td>
+                       
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+
+
+      {% endblock %}

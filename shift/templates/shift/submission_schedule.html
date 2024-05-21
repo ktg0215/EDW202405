@@ -1,0 +1,59 @@
+{% extends "shift/shift_base.html" %}
+{% block content %}
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
+    <style>
+        /* table {
+            table-layout: fixed;
+        } */
+        
+    </style>
+<title>シフト提出</title>
+<div class ="row"><div class="col-sm"><h3>{{ week_first | date:"Y年m月d日" }}〜{{ week_last | date:"m月d日" }}</h3></div></div>
+<nav aria-label="Page navigation example">
+    
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link" href="{% url 'shift:submission_schedule' user.pk week_previous.year week_previous.month week_previous.day %}">前</a></li>
+      <li class="page-item"><a class="page-link" href="{% url 'shift:submission_schedule' user.pk week_next.year week_next.month week_next.day %}">次</a></li>
+    </ul>    
+  </nav>
+    <form action="" method="POST">
+        {{ month_formset.management_form }}{% for week_day_forms in month_day_forms %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-sm"　>
+                      {% for day, forms in week_day_forms.items %}
+            
+                <tr> <td>{{ day | date:"n" }}月{{day |date:"j"}}日 
+                    {% if day|date:"D" == "日" %}
+                    <small>
+                        <span style="color: #F00;">({{ day | date:"D" }})</span>
+                    </small></td>
+                    {% elif day|date:"D" == "土" %}
+                    <small>
+                        <span style="color:#0000FF">({{ day | date:"D" }})</span>
+                    </small></td>
+                    {% else %}
+                    <small>
+                    ({{ day|date:"D" }})
+                </small></td>
+                   {% endif %}
+                   {% for form in forms %}
+                   {{form.date}}{{form.id}}
+                   <td>
+                   <div class="form-row">
+                    <div class="form-group col-xs">
+                    {{form.start_time|add_class:'form-control form-control-sm'}}</div>
+                        <div class="form-group col-xs">
+                        {{form.end_time|add_class:'form-control form-control-sm'}}
+                    </div></div>
+                </td>
+                </tr>
+                    {% endfor %}{% endfor %}
+                
+            {% endfor %}
+            </tbody>
+        </table></div>
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">送信</button>
+    </form>
+{% endblock %}

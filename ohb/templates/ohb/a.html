@@ -1,0 +1,14 @@
+{% for a,b in date %}
+<td>{{ a.day }}日 <small>({{b}})</small></td>
+{% if b == "日" %}
+
+<td>  <span style="color: #F00;">{{ a.day }}日 <small>({{b}})</small></span></td>
+
+{% elif b == "土" %}
+
+<td><span style="color:#0000FF">{{ a.day }}日 <small>({{b}})</small></span></td>
+
+{% else %}
+<td> <small>{{ a.day }}日 <small>({{b}})</small></td>
+
+       {% endif %} {% endfor %}

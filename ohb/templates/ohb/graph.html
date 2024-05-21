@@ -1,0 +1,43 @@
+{% extends "ohb/base.html" %}
+{% block content %}
+
+
+{% load static %}
+<style>
+    .left-align-image {
+      float: left; /* 画像を左寄せにするためのスタイル */
+      margin-right: 10px; /* 画像と周囲の余白を調整 */
+    }
+  </style>  
+
+        
+   
+        <img src="data:image/png;base64,{{ graph_image }}" alt="Graph Image"class="left-align-image">
+
+        <table class="table table-striped table-bordered table-hover">
+            <tr><th></th>
+        {% for a in days %}
+        <th>{{a}}日</th>
+        {%endfor%}
+    </tr>
+    <tr>
+    <th>作成数</th>
+        {% for a in item_create %}
+        <td>{{a}}</td>
+        {%endfor%}
+    </tr>
+    <th>ロス</th>
+    {% for a in item_los %}
+    <td>{{a}}</td>
+    {%endfor%}
+    </tr>
+    <th>平均値</th>
+    {% for a in ave %}
+    <td>{{a}}</td>
+    {%endfor%}
+</tr>
+
+
+        
+        {% endblock %}
+      

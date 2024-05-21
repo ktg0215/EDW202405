@@ -1,0 +1,83 @@
+{% extends "shift/shift_base.html" %}
+{% block content %}
+
+
+{% load static %}
+
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" /> -->
+
+
+<style>
+.mgr-10{
+    margin-right : 100px;
+}
+    
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-link" href="{% url 'shift:shift_list' %}">全店</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+   
+    </div>
+  </nav>
+
+
+<h3>{{ week_first}}-{{ week_last }}</h3>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link" href="{% url 'shift:shift_list'  week_previous.year week_previous.month week_previous.day %}">前</a></li>
+      <li class="page-item"><a class="page-link" href="{% url 'shift:shift_list'  week_next.year week_next.month week_previous.day %}">次</a></li>
+    </ul>
+  </nav>
+
+<table class="table table-bordered"　>
+    <th>User</th>
+    {% for day in df %}
+    <th>{{day | date:"j" }}日<small>({{ day | date:"D" }})</small></th>
+    {% endfor %}
+
+    {% for index,row in df.iterrows %}
+
+<tr>    
+    <th>{{index}}</th>
+    <td>{{row.0}}</td>
+    <td>{{row.1}}</td>
+    <td>{{row.2}}</td>
+    <td>{{row.3}}</td>
+    <td>{{row.4}}</td>
+    <td>{{row.5}}</td>
+    <td>{{row.6}}</td>
+    <td>{{row.7}}</td>
+    <td>{{row.8}}</td>
+    <td>{{row.9}}</td>
+    <td>{{row.10}}</td>
+    <td>{{row.11}}</td>
+    <td>{{row.12}}</td>
+    <td>{{row.13}}</td>
+    <td>{{row.14}}</td>
+    
+    {% if row.15 == True %}
+    <td>{{row.15}}</td>
+    {% else %}
+    {% endif %}
+</tr>
+
+{% endfor %}
+</table>
+
+<div class="alert alert-primary" role="alert">
+    csv出力しました<a href="#" class="alert-link"></a>
+  </div>
+  
+        <!-- <a href="{% url 'shift:submission_schedule' user.pk %}" >
+        <button type="submit" class="btn btn-primary">Turn Back</button></a>
+        <a href="{% url 'register:top' %}" >
+            <button type="submit" class="btn btn-primary">Ok</button></a> -->
+    
+    
+
+{% endblock %}

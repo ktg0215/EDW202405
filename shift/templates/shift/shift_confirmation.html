@@ -1,0 +1,51 @@
+{% extends "shift/shift_base.html" %}
+{% block content %}
+
+
+    <h5>{{ week_first | date:"Y年m月d日" }}〜{{ week_last | date:"Y年m月d日" }}</h5>
+
+    <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="{% url 'shift:shift_confirmation' user.pk week_previous.year week_previous.month week_previous.day %}">前</a></li>
+        <li class="page-item"><a class="page-link" href="{% url 'shift:shift_confirmation' user.pk week_next.year week_next.month week_next.day %}">次</a></li>
+      </ul>
+
+    <table class="table table-bordered"　>
+
+        <tbody>
+            {% for day,schedules in week_day_schedules.items %}
+        <tr>
+            
+    <th><div class="text-center">{{day | date:"n"}}月{{day | date:"j" }}日 
+    {% if day|date:"D" == "日" %}
+      <small>
+          <span style="color: #F00;">({{ day | date:"D" }})</span>
+      </small></div></th>
+      {% elif day|date:"D" == "土" %}
+      <small>
+            <span style="color:#0000FF">({{ day | date:"D" }})</span>
+      </small></div></th>
+      {% else %}
+        <small>({{ day|date:"D" }})</small></div></th>
+  
+             {% endif %}
+            </div>
+
+       
+            {% for s in schedules %}
+            <td>   
+     
+            {{ s.get_start_time_display }} - {{ s.get_end_time_display }}</td>
+            
+            
+                
+            
+        </tr>{% endfor %}{% endfor %}
+        </tbody>
+    </table>
+       
+        <a href="{% url 'shift:shift_top' %}" >
+            <button type="submit" class="btn btn-primary">Ok</button></a>
+    
+    
+
+{% endblock %}

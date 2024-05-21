@@ -1,0 +1,30 @@
+
+{% extends "ohb/base.html" %}
+{% block content %}
+
+<head>
+    <html lang="ja">
+      <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="#" >
+    
+       <head>
+
+
+
+
+
+
+
+
+<form method="post">{% csrf_token %}
+  <p>新アイテムの登録</p>
+    {{ form.as_p }}
+    <input type="submit" value="Save">
+</form>
+
+{% endblock %}

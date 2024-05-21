@@ -1,0 +1,285 @@
+{% extends "register/base.html" %}
+{% block content %}
+
+
+{% load static %}
+
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" /> -->
+
+
+<style>
+.mgr-10{
+    margin-right : 100px;
+}
+    
+</style>
+
+{% if user.last_name == "加藤木" or user.shops.get_shop_display == "その他" %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light" >
+  <a class="navbar-link" href="{% url 'shift:shift_list' %}">      <img src="{% static 'images/shop.png' %}" width="30" height="30"  class="d-inline-block align-top" >
+  </a>
+
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+     
+      {% for s in bshop %}
+      {% if  s.get_shop_display == "その他" %}
+      {%else%}
+      <li class="nav-item">
+        <a class="nav-item nav-link" href="{% url 'shift:month_with_schedule' s.shop %}">{{s.get_shop_display}}店</a>
+      </li>
+      {%endif%}
+    {% endfor %}
+    
+
+        </div></li>
+        </ul>
+        <span class="nav-item">
+          <a class="nav-item nav-link" href="{% url 'shift:month_with_schedule' shopnum week_previous.year week_previous.month week_previous.day %}">前<<<</a>
+        </span>
+        <span class="navbar-text">
+          {%  for a in shop %}
+          {% if forloop.first %}
+          <small>{{ week_first}}-{{ week_last }}&nbsp;{{a.get_shop_display}}</small>
+          {% else %}
+          {% endif %}
+          {% endfor %}
+        </span>
+        <span class="nav-item">
+          <a class="nav-item nav-link"href="{% url 'shift:month_with_schedule' shopnum week_next.year week_next.month week_next.day %}">>>>次</a>
+        </span>
+    
+  </div>
+</nav>
+{% else %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light" >
+  <a class="navbar-link" href="">      <img src="{% static 'images/shop.png' %}" width="30" height="30"  class="d-inline-block align-top" >
+  </a>
+
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+     
+
+    
+
+        </ul>
+        <span class="nav-item">
+          <a class="nav-item nav-link" href="{% url 'shift:month_with_schedule' shopnum week_previous.year week_previous.month week_previous.day %}">前<<<</a>
+        </span>
+        <span class="navbar-text">
+          {%  for a in shop %}
+          {% if forloop.first %}
+          <small>{{ week_first}}-{{ week_last }}&nbsp;{{user.shops.get_shop_display}}</small>
+          {% else %}
+          {% endif %}
+          {% endfor %}
+        </span>
+        <span class="nav-item">
+          <a class="nav-item nav-link"href="{% url 'shift:month_with_schedule' shopnum week_next.year week_next.month week_next.day %}">>>>次</a>
+        </span>
+    
+  </div>
+</nav>
+{% endif %}
+<div class="table-responsive">
+  <table class="table table-bordered table-sm"　>
+
+  <th><div class="text-center">User</div></th>
+  {% for day in df %}
+  <th><div class="text-center">{{day | date:"n"}}月{{day | date:"j" }}日 
+    {% if day|date:"D" == "日" %}
+      <small>
+          <span style="color: #F00;">({{ day | date:"D" }})</span>
+      </small></div></th>
+      {% elif day|date:"D" == "土" %}
+      <small>
+            <span style="color:#0000FF">({{ day | date:"D" }})</span>
+      </small></div></th>
+      {% else %}
+        <small>({{ day|date:"D" }})</small></div></th>
+  
+             {% endif %} {% endfor %}
+
+{% for index,row in df.iterrows %}
+{% if index == "希望人数" %}
+
+<tr>    
+  <td bgcolor="#EEEEEE"><small><div class="text-center">{{index}}</div></small></td>
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.0}}</div></small></td>
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.1}}</div></small></td>
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.2}}</div></small></td>
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.3}}</div></small></td>
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.4}}</div></small></td>
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.5}}</div></small></td>
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.6}}</div></small></td>
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.7}}</div></small></td>
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.8}}</div></small></td>
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.9}}</div></small></td>
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.10}}</div></small></td>
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.11}}</div></small></td>
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.12}}</div></small></td>
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.13}}</div></small></td>
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.14}}</div></small></td>
+  {% if row.15 == None %}
+  
+  {% else %}
+  
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.15}}</div></small></td>
+  {% endif %}
+</tr>
+{% elif index == "必要人数" %}
+
+<tr>    
+  <td bgcolor="#EEEEEE"><small><div class="text-center">{{index}}</div></small></td>
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.0}}</div></small></td>
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.1}}</div></small></td>
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.2}}</div></small></td>
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.3}}</div></small></td>
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.4}}</div></small></td>
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.5}}</div></small></td>
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.6}}</div></small></td>
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.7}}</div></small></td>
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.8}}</div></small></td>
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.9}}</div></small></td>
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.10}}</div></small></td>
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.11}}</div></small></td>
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.12}}</div></small></td>
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.13}}</div></small></td>
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.14}}</div></small></td>
+  {% if row.15 == None %}
+  
+  {% else %}
+  
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.15}}</div></small></td>
+  {% endif %}
+</tr>
+{% elif index == "過不足"%}
+<tr>    
+  <th bgcolor="#EEEEEE"><small><div class="text-center">{{index}}</div></small></th>
+  {% if row.0 < 0 %}
+  <td  bgcolor="#ff7f50"><small><div class="text-center">{{row.0}}</div></small></td>
+  {% else %}
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.0}}</div></small></td>
+  {% endif %}
+  {% if row.1 < 0 %}
+  <td  bgcolor="#ff7f50"><small><div class="text-center">{{row.1}}</div></small></td>
+  {% else %}
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.1}}</div></small></td>
+  {% endif %}
+  {% if row.2 < 0 %}
+  <td  bgcolor="#ff7f50"><small><div class="text-center">{{row.2}}</div></small></td>
+  {% else %}
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.2}}</div></small></td>
+  {% endif %}
+  {% if row.3 < 0 %}
+  <td  bgcolor="#ff7f50"><small><div class="text-center">{{row.3}}</div></small></td>
+  {% else %}
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.3}}</div></small></td>
+  {% endif %}
+  {% if row.4 < 0 %}
+  <td  bgcolor="#ff7f50"><small><div class="text-center">{{row.4}}</div></small></td>
+  {% else %}
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.4}}</div></small></td>
+  {% endif %}
+  {% if row.5 < 0 %}
+  <td  bgcolor="#ff7f50"><small><div class="text-center">{{row.5}}</div></small></td>
+  {% else %}
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.5}}</div></small></td>
+  {% endif %}
+  {% if row.6 < 0 %}
+  <td  bgcolor="#ff7f50"><small><div class="text-center">{{row.6}}</div></small></td>
+  {% else %}
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.6}}</div></small></td>
+  {% endif %}
+  {% if row.7 < 0 %}
+  <td  bgcolor="#ff7f50"><small><div class="text-center">{{row.7}}</div></small></td>
+  {% else %}
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.7}}</div></small></td>
+  {% endif %}
+  {% if row.8 < 0 %}
+  <td  bgcolor="#ff7f50"><small><div class="text-center">{{row.8}}</div></small></td>
+  {% else %}
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.8}}</div></small></td>
+  {% endif %}
+  {% if row.9 < 0 %}
+  <td  bgcolor="#ff7f50"><small><div class="text-center">{{row.9}}</div></small></td>
+  {% else %}
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.9}}</div></small></td>
+  {% endif %}
+  {% if row.10 < 0 %}
+  <td  bgcolor="#ff7f50"><small><div class="text-center">{{row.10}}</div></small></td>
+  {% else %}
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.10}}</div></small></td>
+  {% endif %}
+  {% if row.11 < 0 %}
+  <td  bgcolor="#ff7f50"><small><div class="text-center">{{row.11}}</div></small></td>
+  {% else %}
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.11}}</div></small></td>
+  {% endif %}
+  {% if row.12 < 0 %}
+  <td  bgcolor="#ff7f50"><small><div class="text-center">{{row.12}}</div></small></td>
+  {% else %}
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.12}}</div></small></td>
+  {% endif %}
+  {% if row.13 < 0 %}
+  <td  bgcolor="#ff7f50"><small><div class="text-center">{{row.13}}</div></small></td>
+  {% else %}
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.13}}</div></small></td>
+  {% endif %}
+  {% if row.14 < 0 %}
+  <td  bgcolor="#ff7f50"><small><div class="text-center">{{row.14}}</div></small></td>
+  {% else %}
+  <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.14}}</div></small></td>
+  {% endif %}
+  
+  {% if row.15 == None %}
+  {%else%}
+     {% if row.15 < 0 %}
+     <td  bgcolor="#ff7f50"><small><div class="text-center">{{row.15}}</div></small></td>
+     {% else %}
+     <td  bgcolor="#EEEEEE"><small><div class="text-center">{{row.15}}</div></small></td>
+  {% endif %}
+  {%endif%}
+ 
+</tr>
+{% else %}
+<tr>
+  <th><div class="text-center">{{index}}</div></th>
+  <td><div class="text-center">{{ row.0}}</div></td>
+    <td><div class="text-center">{{row.1}}</div></td>
+    <td><div class="text-center">{{row.2}}</div></td>
+    <td><div class="text-center">{{row.3}}</div></td>
+    <td><div class="text-center">{{row.4}}</div></td>
+    <td><div class="text-center">{{row.5}}</div></td>
+    <td><div class="text-center">{{row.6}}</div></td>
+    <td><div class="text-center">{{row.7}}</div></td>
+    <td><div class="text-center">{{row.8}}</div></td>
+    <td><div class="text-center">{{row.9}}</div></td>
+    <td><div class="text-center">{{row.10}}</div></td>
+    <td><div class="text-center">{{row.11}}</div></td>
+    <td><div class="text-center">{{row.12}}</div></td>
+    <td><div class="text-center">{{row.13}}</div></td>
+    <td><div class="text-center">{{row.14}}</div></td>
+
+     {% if row.15 == None %}
+     {%else%}
+    <td><div class="text-center">{{row.15}}</div></td>
+     {%endif%}
+
+    
+</tr>
+{% endif %}
+{% endfor %}
+
+
+</table></div>
+{% for day in df %}
+    {% if forloop.first %}
+    
+            <a href="{% url 'shift:master_csv' shopnum day.year day.month day.day %}" class="btn btn-info btn-block login"><img src="{% static 'images/xlsx.png' %}" width="25" height="25"  class="d-inline-block align-top" alt="">&nbsp; 出力</a>
+      
+    {% else %}
+    {% endif %}
+{% endfor %}     
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "ohb/base.html" %}
+{% block content %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+        <a  href="{% url 'ohb:form' year_ago month_ago daya %}">前<<<</a>　　　{{year}}年{{month}}月{{day}}日　　　
+        {% if today == day %}
+
+        {%else%}
+        
+        <a href="{% url 'ohb:form' year_next month_next dayb %}">>>>次</a>
+      
+        {%endif%}
+
+    <form action="" method="POST">
+        {{ formset.management_form }}
+        <table class="table table-bordered">
+            
+        <tr>
+            <th>店舗</th>
+            
+            <th>作成数</th>
+            <th>廃棄</th>
+        </tr>
+        
+
+{% for aa,k in zip_date  %}
+
+<tr>
+<td>{{k.item}}{{k.id}}   {{aa}}</td><td>{{k.item_create}}</td><td>{{k.item_los}}</td>{{k.date}}
+    
+    </tr>
+   
+    {%endfor%}
+    </table>{% csrf_token %}
+    <button type="submit" class="btn btn-primary">送信</button>
+    </form>
+    
+
+    
+{% endblock %}

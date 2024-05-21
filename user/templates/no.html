@@ -1,0 +1,73 @@
+{% extends "shift/shift_base.html" %}
+
+
+{% load static %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}{% block content %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+ 
+   
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            
+              <a class="nav-item nav-link" href="{% url 'user:no' 1 %}">
+              EDW</a>
+              <a class="nav-item nav-link" href="{% url 'user:no' 2 %}">
+                OHB</a>
+                            
+
+          </div>
+      </div>
+    </div>
+    
+    <span class="navbar-text">
+      <small>
+      在籍
+      
+    </small>
+    </span>
+  </nav>
+
+<h3></h3>
+
+<p>シフトの並び順を決めてください。</p>
+<p>数字が大きい順ではなく、11＜2　101＜2となります。</p>
+<p>お勧め設定　今後在籍が上下することを考えて下記の設定がお勧めです</p>
+
+<p>名簿や希望シフト、シフト出力の並び順はここでの設定に依存します。</p>
+</p>
+<form action="" method="POST">
+    
+    {{ formset.management_form }}
+    <table class="table table-bordered">
+        <tr>
+            
+            
+            <th>User</th>
+            <th>順番</th>
+        </tr>
+
+        {% for form in formset %}
+        <tr>
+          <!-- <label for="{{ form.item_no.id_for_label }}"> {{ form.instance.item_name }}</label> -->
+         
+          <td>{{ form.instance.user_name }}</td>
+          <td> {{ form.user_no }}</td>
+          <td> {{ form.id }}</td>
+
+
+
+</tr>
+
+
+{%endfor%}
+</table>
+
+{% csrf_token %}
+<button type="submit" class="btn btn-primary">送信</button>
+</form>
+
+{% endblock %}
