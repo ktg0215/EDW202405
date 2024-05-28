@@ -11,7 +11,7 @@ ARG USER_GID=1000
 # uwsgiのパスを通す
 ENV PATH "$PATH:/home/$WORK_USER/.local/bin"
 
-# ユーザーを新規作成
+# ユーザを新規作成
 RUN groupadd --gid $USER_GID $WORK_USER \
     && useradd --uid $USER_UID --gid $USER_GID -m $WORK_USER \
     && apt-get update \
